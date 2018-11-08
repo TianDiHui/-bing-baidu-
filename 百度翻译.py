@@ -6,7 +6,7 @@ data= {
     'to': 'en',
     'query': words,
     'transtype': 'translang',
-    'simple_means_flag': '3'      #百度神坑啊
+    'simple_means_flag': '3' 
 }
 #由于百度的限制,需要加一个头部信息,来伪装成用浏览器访问的
 headers = {
@@ -19,15 +19,4 @@ url='https://fanyi.baidu.com/basetrans'
 result=requests.post(url,data=data,headers=headers)
 # 粗暴的打印全部结果
 print(result.text)
-
-#根据我的试验以及前面暗示的flag,
-# 发现,百度翻译在翻译时将翻译分为两种,
-# 一种是单词翻译(长度<=3),另一种是句子翻译(长度>3)
-#这两种不同的翻译方式,返回的结果有着很大的不同,如下:
-if len(words)<=3:
-    l=list(result.json()['dict']['word_means'])
-    #由于单词一般都有好几个意思,打印出来是个列表,不太美观,利用循环挨个打印出来.
-    for i in l:
-        print(i)
-else:
-    print(result.json()['trans'][0]['dst'])
+print(result.json()['trans'][0]['dst'])
